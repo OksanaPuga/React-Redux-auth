@@ -18,6 +18,23 @@ export const authUser = (formValues, callback) => async dispatch => {
     }
 };
 
+export const signin = (formValues, callback) => async dispatch => {
+    try {
+        const response = await axios.post('http://localhost:3090/signin', formValues);
+        dispatch({
+            type: cons.AUTH_USER,
+            payload: response.data.token
+        });
+        localStorage.setItem('token', response.data.token);
+        callback();
+    } catch (e) {
+        dispatch({
+            type: cons.AUTH_ERROR,
+            payload: 'Invalid ccredentials'
+        });
+    }
+};
+
 export const signout = () => {
     localStorage.removeItem('token');
 
