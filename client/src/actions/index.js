@@ -8,6 +8,7 @@ export const authUser = (formValues, callback) => async dispatch => {
             type: cons.AUTH_USER,
             payload: response.data.token
         });
+        localStorage.setItem('token', response.data.token);
         callback();
     } catch (e) {
         dispatch({
@@ -15,4 +16,13 @@ export const authUser = (formValues, callback) => async dispatch => {
             payload: 'Email is in use'
         });
     }
-}
+};
+
+export const signout = () => {
+    localStorage.removeItem('token');
+
+    return {
+        type: cons.AUTH_USER,
+        payload: ''
+    };
+};
