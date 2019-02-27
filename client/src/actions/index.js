@@ -1,13 +1,14 @@
 import axios from 'axios';
 import * as cons from './types';
 
-export const authUser = formValues => async dispatch => {
+export const authUser = (formValues, callback) => async dispatch => {
     try {
         const response = await axios.post('http://localhost:3090/signup', formValues);
         dispatch({
             type: cons.AUTH_USER,
             payload: response.data.token
         });
+        callback();
     } catch (e) {
         dispatch({
             type: cons.AUTH_ERROR,

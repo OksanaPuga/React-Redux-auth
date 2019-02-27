@@ -6,7 +6,9 @@ import * as actions from '../../actions';
 
 class Signup extends React.Component {
     onSubmit = formValues => {
-        this.props.authUser(formValues);
+        this.props.authUser(formValues, () => {
+            this.props.history.push('/feature');
+        });
     }
 
     render() {
