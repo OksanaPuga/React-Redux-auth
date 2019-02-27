@@ -1,9 +1,12 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import * as actions from '../../actions';
 
 class Signup extends React.Component {
     onSubmit = formValues => {
-        console.log(formValues);
+        this.props.authUser(formValues);
     }
 
     render() {
@@ -28,9 +31,19 @@ class Signup extends React.Component {
                     />
                 </fieldset>
                 <button>Submit</button>
+                <br />
+                <br />
+                <div style={{ color: 'red' }}>{this.props.errorMessage}</div>
             </form>
         );
     }
 }
 
-export default reduxForm({ form: 'signup' })(Signup);
+const mapStateToProps = state => ({
+    errorMessage: state.auth.errorMessage
+})
+
+export default compose(
+    reduxForm({ form: 'signup' }),
+    connect(mapStateToProps, actions)
+)(Signup);
