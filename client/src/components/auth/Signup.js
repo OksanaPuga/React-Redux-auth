@@ -1,18 +1,36 @@
 import React from 'react';
+import { reduxForm, Field } from 'redux-form';
 
 class Signup extends React.Component {
+    onSubmit = formValues => {
+        console.log(formValues);
+    }
+
     render() {
         return (
-            <form>
+            <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
                 <fieldset>
                     <label>Email:</label>
+                    <Field
+                        name='email'
+                        type='text'
+                        component='input'
+                        autoComplete='none'
+                    />
                 </fieldset>
                 <fieldset>
                     <label>Password:</label>
+                    <Field
+                        name='password'
+                        type='password'
+                        component='input'
+                        autoComplete='none'
+                    />
                 </fieldset>
+                <button>Submit</button>
             </form>
         );
     }
 }
 
-export default Signup;
+export default reduxForm({ form: 'signup' })(Signup);
